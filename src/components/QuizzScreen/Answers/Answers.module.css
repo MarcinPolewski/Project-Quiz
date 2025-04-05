@@ -1,0 +1,10 @@
+.answerButton {
+    background-color: yellow;
+}
+
+.answers {
+    background-color: aqua;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* create two equal columns */
+}
