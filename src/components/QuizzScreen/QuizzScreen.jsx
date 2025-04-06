@@ -31,7 +31,7 @@ export default function () {
         }
     }
     else {
-        topContent = <Timer duration={3000} onEnd={handleTimerEnd} />;
+        topContent = <Timer key={currentQuestionIdx} duration={3000} onEnd={handleTimerEnd} />;
     }
 
     return (<Screen>
@@ -69,7 +69,7 @@ export default function () {
     }
     function scheduleTransitionToNextQuestion() {
         console.log("schedule transition to next question");
-        setTimeout(() => nextQuestion, NEXT_QUESTION_DELAY);
+        setTimeout(nextQuestion, NEXT_QUESTION_DELAY);
     }
 
 
