@@ -3,35 +3,32 @@ import { useState, useEffect, useRef, useImperativeHandle } from 'react';
 export default function Timer({ duration, onEnd }) {
     const [timeLeft, setTimeLeft] = useState(duration);
     const UPDATE_INTERVAL = 50;
-    let interval = useRef(null);
 
     useEffect(() => {
-        startTimer();
-        return (stopTimer)
+        const interval = setInterval(() => {
+            setTimeLeft((prevTimeLeft) => {
+                const newTimeLeft = prevTimeLeft - UPDATE_INTERVAL;
+                if (newTimeLeft <= 0) {
+                    clearInterval(interval);
+                    onEnd();
+                    return 0;
+                }
+                return newTimeLeft;
+            });
+
+            return (() => {
+                clearInterval(interval);
+            });
+        }, UPDATE_INTERVAL)
+
+
     }, [])
+
+
 
     return <progress max={duration} value={timeLeft} />
 
     // ===================
-
-    function updateTimer() {
-        if (timeLeft - UPDATE_INTERVAL <= 0) {
-            clearInterval(interval.current)
-            onEnd()
-        }
-        else {
-            setTimeLeft((prevTimeLeft) => prevTimeLeft - UPDATE_INTERVAL);
-        }
-    }
-
-    function startTimer() {
-        interval.current = setInterval(updateTimer, UPDATE_INTERVAL);
-    }
-
-    function stopTimer() {
-        clearInterval(interval.current);
-        interval.current = null;
-    }
 
 
 }
