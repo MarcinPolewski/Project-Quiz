@@ -1,6 +1,6 @@
-import { useState, useEffect, useRef, useImperativeHandle } from 'react';
+import { useState, useEffect } from 'react';
 
-export default function Timer({ duration, onEnd }) {
+export default function Timer({ duration }) {
     const [timeLeft, setTimeLeft] = useState(duration);
     const UPDATE_INTERVAL = 50;
 
@@ -13,19 +13,6 @@ export default function Timer({ duration, onEnd }) {
             clearInterval(interval);
         };
     }, []);
-
-
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            onEnd();
-            // clearINterval?
-        }, duration);
-
-        return () => {
-            clearTimeout(timer);
-        };
-    }, []);
-
 
 
     return <progress max={duration} value={timeLeft} />

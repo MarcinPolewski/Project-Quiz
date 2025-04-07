@@ -23,7 +23,7 @@ function App() {
       return <StartScreen onStart={handleStart} />;
     }
     else if (appState === "quiz") {
-      return <QuizzScreen />;
+      return <QuizzScreen onEnd={handleQuizEnd} />;
     }
     else if (appState === "result") {
       return <ResultScreen />;
@@ -32,6 +32,11 @@ function App() {
 
   function handleStart() {
     setAppState("quiz");
+  }
+
+  function handleQuizEnd(userAnswers) {
+    console.log(userAnswers);
+    setAppState("result");
   }
 }
 
