@@ -6,23 +6,25 @@ export default function Timer({ duration, onEnd }) {
 
     useEffect(() => {
         const interval = setInterval(() => {
-            setTimeLeft((prevTimeLeft) => {
-                const newTimeLeft = prevTimeLeft - UPDATE_INTERVAL;
-                if (newTimeLeft <= 0) {
-                    clearInterval(interval);
-                    onEnd();
-                    return 0;
-                }
-                return newTimeLeft;
-            });
+            setTimeLeft((prevTimeLeft) => prevTimeLeft - UPDATE_INTERVAL);
+        }, UPDATE_INTERVAL);
 
-            return (() => {
-                clearInterval(interval);
-            });
-        }, UPDATE_INTERVAL)
+        return () => {
+            clearInterval(interval);
+        };
+    }, []);
 
 
-    }, [])
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            onEnd();
+            // clearINterval?
+        }, duration);
+
+        return () => {
+            clearTimeout(timer);
+        };
+    }, []);
 
 
 

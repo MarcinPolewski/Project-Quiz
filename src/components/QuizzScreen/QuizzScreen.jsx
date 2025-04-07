@@ -14,7 +14,7 @@ export default function () {
         answerIdx: NO_ANSWER_SELECTED,
         isResultDisplayed: false
     });
-    const currentQuestionIdx = quizState.userAnswers.length;
+    const currentQuestionIdx = quizState.userAnswers.length - (quizState.isResultDisplayed ? 1 : 0);
 
     const question = CONTENT[currentQuestionIdx].question;
     const answers = CONTENT[currentQuestionIdx].answers;
@@ -31,11 +31,12 @@ export default function () {
         }
     }
     else {
-        topContent = <Timer key={currentQuestionIdx} duration={3000} onEnd={handleTimerEnd} />;
+        topContent = <h2>" "</h2>
     }
 
     return (<Screen>
         {topContent}
+        <Timer key={currentQuestionIdx} duration={3000} onEnd={handleTimerEnd} />
         <h1>{question}</h1>
         <Answers
             answers={answers}
@@ -57,10 +58,10 @@ export default function () {
     }
 
     function handleTimerEnd() {
-        console.log("timer ended");
         if (quizState.answerIdx === NO_ANSWER_SELECTED) {
             setQuizState((prevState) => ({
                 ...prevState,
+                userAnswers: [...prevState.userAnswers, NO_ANSWER_SELECTED],
                 isResultDisplayed: true
             }));
         }
@@ -68,13 +69,12 @@ export default function () {
 
     }
     function scheduleTransitionToNextQuestion() {
-        console.log("schedule transition to next question");
         setTimeout(nextQuestion, NEXT_QUESTION_DELAY);
     }
 
 
     function nextQuestion() {
-        console.log("next question");
+        console.log("SWITCHING TO NEXT QUESTION");
         setQuizState((prevState) => ({
             userAnswers: [...prevState.userAnswers],
             answerIdx: NO_ANSWER_SELECTED,
