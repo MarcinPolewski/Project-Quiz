@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 
 import Question from './Question';
 import Timer from './Timer';
@@ -7,7 +7,7 @@ const SELECT_MODE = 0;
 const RESULT_MODE = 1;
 
 const TIMER_DURATION = 3000;
-const NEXT_QUESTION_DELAY = 1000;
+const NEXT_QUESTION_DELAY = 500;
 const NO_ANSWER_SELECTED = -1;
 
 export default function Quiz({ question, answers, rightAnswerIndex, switchToNextQuestion }) {
@@ -17,11 +17,24 @@ export default function Quiz({ question, answers, rightAnswerIndex, switchToNext
     const wasTransitionScheduled = useRef(false);
 
 
+    const handleTransition = useCallback((answerIdx) => {
+        if (!wasTransitionScheduled.current) {
+            wasTransitionScheduled.current = true;
+            setTimeout(() => { switchToNextQuestion() }, NEXT_QUESTION_DELAY);
+        }
+        setMode(RESULT_MODE);
+    }, [switchToNextQuestion]);
+
+    const handleTimerEnd = useCallback(() => {
+        handleTransition(NO_ANSWER_SELECTED);
+    }, [handleTransition]);
+
+
     useEffect(() => {
         timerRef.current = setTimeout(handleTimerEnd, TIMER_DURATION);
         return () => { clearTimeout(timerRef.current) };
 
-    })
+    }, [handleTimerEnd]);
 
     function handleAnswerSelect(answerIdx) {
         clearTimeout(timerRef.current);
@@ -29,23 +42,12 @@ export default function Quiz({ question, answers, rightAnswerIndex, switchToNext
     }
 
 
-    function handleTimerEnd() {
-        handleTransition(NO_ANSWER_SELECTED);
-    }
 
-    function handleTransition(answerIdx) {
-        if (!wasTransitionScheduled.current) {
-            wasTransitionScheduled.current = true;
-            setTimeout(() => { switchToNextQuestion() }, NEXT_QUESTION_DELAY);
-        }
-        setMode(RESULT_MODE);
-    }
-
-
-
+    const headingContent = (mode === SELECT_MODE ? "Select an answer" : "Next one incomming...");
 
     return (
         <>
+            <h1>{headingContent}</h1>
             <Timer key={mode} duration={mode === SELECT_MODE ? TIMER_DURATION : NEXT_QUESTION_DELAY} />
             <Question
                 question={question}
