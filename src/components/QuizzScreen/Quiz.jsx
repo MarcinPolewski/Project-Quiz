@@ -6,7 +6,7 @@ import Timer from './Timer';
 const SELECT_MODE = 0;
 const RESULT_MODE = 1;
 
-const TIMER_DURATION = 3000;
+const TIMER_DURATION = 10000;
 const NEXT_QUESTION_DELAY = 500;
 const NO_ANSWER_SELECTED = -1;
 
@@ -20,7 +20,7 @@ export default function Quiz({ question, answers, rightAnswerIndex, switchToNext
     const handleTransition = useCallback((answerIdx) => {
         if (!wasTransitionScheduled.current) {
             wasTransitionScheduled.current = true;
-            setTimeout(() => { switchToNextQuestion() }, NEXT_QUESTION_DELAY);
+            setTimeout(() => { switchToNextQuestion(answerIdx) }, NEXT_QUESTION_DELAY);
         }
         setMode(RESULT_MODE);
     }, [switchToNextQuestion]);
