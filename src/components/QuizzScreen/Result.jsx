@@ -6,10 +6,10 @@ export default function Result({ userAnswers }) {
 
     return (
         <div className="result">
-            <h1>Report of Polishness:</h1>
-            <h2>You have been classified as: {classification}</h2>
+            <h1>Result of polishness test:</h1>
+            <h2>You have scored {percentage}%, therefore you have been classified as {classification}</h2>
             <img src={image} alt={classification} />
-            <h3>You scored {percentage}%</h3>
+            <p>{notes}</p>
         </div>
     );
 }

@@ -1,7 +1,6 @@
 import './App.css'
 import { useState } from "react";
 import StartScreen from './components/StartScreen/StartScreen';
-import ResultScreen from './components/ResultScreen/ResultScreen';
 import QuizzScreen from './components/QuizzScreen/QuizzScreen';
 
 function App() {
@@ -25,18 +24,14 @@ function App() {
     else if (appState === "quiz") {
       return <QuizzScreen onEnd={handleQuizEnd} />;
     }
-    else if (appState === "result") {
-      return <ResultScreen />;
-    }
   }
 
   function handleStart() {
     setAppState("quiz");
   }
 
-  function handleQuizEnd(userAnswers) {
-    console.log(userAnswers);
-    setAppState("result");
+  function handleQuizEnd() {
+    console.log();
   }
 }
 
