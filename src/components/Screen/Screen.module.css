@@ -4,9 +4,14 @@
     transition: 0.3s ease-in-out;
 
     width: 50vw;
+    height: 50vh;
     min-width: 500px;
     max-width: 8000px;
-    padding: 10px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 
 }
 

@@ -4,6 +4,8 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import Quiz from "./Quiz";
 import Result from "./Result";
 
+import classes from "./QuizzScreen.module.css";
+
 
 const NO_ANSWER_SELECTED = -1;
 const NEXT_QUESTION_DELAY = 3000;
@@ -38,7 +40,7 @@ export default function QuizzScreen() {
     }
 
 
-    return (<Screen>
+    return (<Screen className={classes.quizScreen}>
         {contentToRender}
     </Screen>);
 

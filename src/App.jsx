@@ -1,4 +1,5 @@
-import './App.css'
+import classes from "./App.module.css";
+
 import { useState } from "react";
 import StartScreen from './components/StartScreen/StartScreen';
 import QuizzScreen from './components/QuizzScreen/QuizzScreen';
@@ -10,9 +11,9 @@ function App() {
   const content = getCurrentScreenContent();
 
   return (
-    <>
+    <div className={classes.app}>
       {content}
-    </>
+    </div>
   )
 
   // ===============================================

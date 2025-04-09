@@ -3,10 +3,12 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import Question from './Question';
 import Timer from './Timer';
 
+import classes from './Quiz.module.css';
+
 const SELECT_MODE = 0;
 const RESULT_MODE = 1;
 
-const TIMER_DURATION = 10000;
+const TIMER_DURATION = 100000;
 const NEXT_QUESTION_DELAY = 500;
 const NO_ANSWER_SELECTED = -1;
 
@@ -49,13 +51,16 @@ export default function Quiz({ question, answers, rightAnswerIndex, switchToNext
         <>
             <h1>{headingContent}</h1>
             <Timer key={mode} duration={mode === SELECT_MODE ? TIMER_DURATION : NEXT_QUESTION_DELAY} />
-            <Question
-                question={question}
-                answers={answers}
-                correctAnswerIdx={rightAnswerIndex}
-                onSelect={handleAnswerSelect}
-                areButtonsDisabled={mode === RESULT_MODE}
-            />
-        </>);
+            <div className={classes.quiz}>
+                <Question
+                    question={question}
+                    answers={answers}
+                    correctAnswerIdx={rightAnswerIndex}
+                    onSelect={handleAnswerSelect}
+                    areButtonsDisabled={mode === RESULT_MODE}
+                />
+            </div>
+        </>
+    );
 
 }
